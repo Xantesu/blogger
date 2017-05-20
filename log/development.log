@@ -3354,3 +3354,330 @@ Processing by ArticlesController#index as HTML
 Completed 200 OK in 27ms (Views: 23.1ms | ActiveRecord: 1.2ms)
 
 
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateComments (20170519221017)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "author_name" varchar, "body" text, "article_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mselect sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_comments_on_article_id" ON "comments" ("article_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170519221017"]]
+  [1m[35m (11.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_comments_on_article_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_comments_on_article_id' AND type='index'
+[0m
+  [1m[36mArticle Load (0.1ms)[0m  [1m[34mSELECT  "articles".* FROM "articles" ORDER BY "articles"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mComment Load (0.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  [1m[36mArticle Load (0.2ms)[0m  [1m[34mSELECT "articles".* FROM "articles"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "comments" ("author_name", "body", "article_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["author_name", "Daffy Duck"], ["body", "I think this article is thh-thh-thupid!"], ["article_id", 14], ["created_at", "2017-05-19 22:14:38.134578"], ["updated_at", "2017-05-19 22:14:38.134578"]]
+  [1m[35m (8.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("author_name", "body", "article_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["author_name", "Chewbacca"], ["body", "RAWR!"], ["article_id", 14], ["created_at", "2017-05-19 22:15:14.215005"], ["updated_at", "2017-05-19 22:15:14.215005"]]
+  [1m[35m (21.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mArticle Load (0.1ms)[0m  [1m[34mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mComment Load (0.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+Started GET "/articles/14" for 127.0.0.1 at 2017-05-20 00:19:05 +0200
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mArticle Load (0.1ms)[0m  [1m[34mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  Rendering articles/show.html.erb within layouts/application
+  [1m[36mComment Load (0.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  Rendered articles/show.html.erb within layouts/application (28.6ms)
+Completed 500 Internal Server Error in 43ms (ActiveRecord: 1.3ms)
+
+
+  
+ActionView::Template::Error (Missing partial articles/_comments with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/home/daniel/the-odin-project/Rails/blogger/app/views"
+):
+    5: <%= link_to "Edit", edit_article_path(@article) %>
+    6: 
+    7: <h3>Comments</h3>
+    8: <%= render partial: "articles/comments", collection: @article.comments %>
+  
+app/views/articles/show.html.erb:8:in `_app_views_articles_show_html_erb___4380299239961951624_70171155694480'
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (2.8ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.2ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (16.5ms)
+Started GET "/articles/14" for 127.0.0.1 at 2017-05-20 00:19:34 +0200
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mArticle Load (0.1ms)[0m  [1m[34mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  Rendering articles/show.html.erb within layouts/application
+  [1m[36mComment Load (0.0ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  Rendered articles/show.html.erb within layouts/application (2.5ms)
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.1ms)
+
+
+  
+ActionView::Template::Error (Missing partial article/_comments with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/home/daniel/the-odin-project/Rails/blogger/app/views"
+):
+    5: <%= link_to "Edit", edit_article_path(@article) %>
+    6: 
+    7: <h3>Comments</h3>
+    8: <%= render partial: "article/comments", collection: @article.comments %>
+  
+app/views/articles/show.html.erb:8:in `_app_views_articles_show_html_erb___4380299239961951624_70171009833660'
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.3ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.5ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.6ms)
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (18.6ms)
+Started GET "/articles/14" for 127.0.0.1 at 2017-05-20 00:20:08 +0200
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mArticle Load (0.1ms)[0m  [1m[34mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  Rendering articles/show.html.erb within layouts/application
+  [1m[36mComment Load (0.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  Rendered collection of articles/_comment.html.erb [2 times] (0.4ms)
+  Rendered articles/show.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 33ms (Views: 32.0ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/articles/14" for 127.0.0.1 at 2017-05-20 00:30:35 +0200
+  
+SyntaxError (/home/daniel/the-odin-project/Rails/blogger/config/routes.rb:5: syntax error, unexpected end-of-input, expecting keyword_end):
+  
+config/routes.rb:5: syntax error, unexpected end-of-input, expecting keyword_end
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (1.8ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.2ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.6ms)
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (19.1ms)
+Started GET "/articles/14" for 127.0.0.1 at 2017-05-20 00:31:02 +0200
+  
+SyntaxError (/home/daniel/the-odin-project/Rails/blogger/config/routes.rb:5: syntax error, unexpected end-of-input, expecting keyword_end):
+  
+config/routes.rb:5: syntax error, unexpected end-of-input, expecting keyword_end
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (2.3ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.1ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (19.6ms)
+Started GET "/articles/14" for 127.0.0.1 at 2017-05-20 00:31:06 +0200
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mArticle Load (0.1ms)[0m  [1m[34mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  Rendering articles/show.html.erb within layouts/application
+  Rendered comments/_form.html.erb (0.5ms)
+  Rendered articles/show.html.erb within layouts/application (1.8ms)
+Completed 500 Internal Server Error in 25ms (ActiveRecord: 3.3ms)
+
+
+  
+SyntaxError (/home/daniel/the-odin-project/Rails/blogger/app/views/comments/_form.html.erb:3: syntax error, unexpected keyword_do_block, expecting &. or :: or '[' or '.'
+...orm for [@article, @comment] do |f| @output_buffer.safe_appe...
+...                               ^
+/home/daniel/the-odin-project/Rails/blogger/app/views/comments/_form.html.erb:16: syntax error, unexpected keyword_ensure, expecting end-of-input):
+  
+app/views/comments/_form.html.erb:3: syntax error, unexpected keyword_do_block, expecting &. or :: or '[' or '.'
+app/views/comments/_form.html.erb:16: syntax error, unexpected keyword_ensure, expecting end-of-input
+app/views/articles/show.html.erb:7:in `_app_views_articles_show_html_erb___4380299239961951624_70171078212680'
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.6ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.5ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (19.0ms)
+Started GET "/articles/14" for 127.0.0.1 at 2017-05-20 00:32:08 +0200
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mArticle Load (0.1ms)[0m  [1m[34mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  Rendering articles/show.html.erb within layouts/application
+  Rendered comments/_form.html.erb (6.0ms)
+  [1m[36mComment Load (0.2ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  Rendered collection of articles/_comment.html.erb [2 times] (0.4ms)
+  Rendered articles/show.html.erb within layouts/application (13.2ms)
+Completed 200 OK in 136ms (Views: 134.2ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/articles/14/comments" for 127.0.0.1 at 2017-05-20 00:32:17 +0200
+Processing by CommentsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"cV2AsoplD9V7wtz8c08pvSiklXvQfGgF2l/E2ekoy/YHIke/AI2ZDkXJGisS/xf3p/DE2qEoKXtmgvDAQcyrtQ==", "comment"=>{"author_name"=>"Idiot", "body"=>"fucking rails"}, "commit"=>"Submit", "article_id"=>"14"}
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 0.0ms)
+
+
+  
+NoMethodError (undefined method `article_id=' for nil:NilClass):
+  
+app/controllers/comments_controller.rb:5:in `create'
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (1.9ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.5ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (17.3ms)
+Started POST "/articles/14/comments" for 127.0.0.1 at 2017-05-20 00:33:14 +0200
+Processing by CommentsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"cV2AsoplD9V7wtz8c08pvSiklXvQfGgF2l/E2ekoy/YHIke/AI2ZDkXJGisS/xf3p/DE2qEoKXtmgvDAQcyrtQ==", "comment"=>{"author_name"=>"Idiot", "body"=>"fucking rails"}, "commit"=>"Submit", "article_id"=>"14"}
+Completed 500 Internal Server Error in 19ms (ActiveRecord: 0.5ms)
+
+
+  
+NoMethodError (undefined method `article_id=' for nil:NilClass):
+  
+app/controllers/comments_controller.rb:5:in `create'
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (2.6ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.8ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (37.0ms)
+Started GET "/" for 127.0.0.1 at 2017-05-20 11:32:26 +0200
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ArticlesController#index as HTML
+  Rendering articles/index.html.erb within layouts/application
+  [1m[36mArticle Load (0.3ms)[0m  [1m[34mSELECT "articles".* FROM "articles"[0m
+  Rendered articles/index.html.erb within layouts/application (12.0ms)
+Completed 200 OK in 445ms (Views: 426.2ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/articles/14" for 127.0.0.1 at 2017-05-20 11:32:29 +0200
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mArticle Load (0.6ms)[0m  [1m[34mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  Rendering articles/show.html.erb within layouts/application
+  Rendered comments/_form.html.erb (17.2ms)
+  [1m[36mComment Load (0.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  Rendered collection of articles/_comment.html.erb [2 times] (0.3ms)
+  Rendered articles/show.html.erb within layouts/application (32.5ms)
+Completed 200 OK in 77ms (Views: 55.9ms | ActiveRecord: 1.5ms)
+
+
+Started POST "/articles/14/comments" for 127.0.0.1 at 2017-05-20 11:32:38 +0200
+Processing by CommentsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fur/hnMnfDyTK9JJIBGHCwEPYx7orBo5mECL1NYicOdtH3C5Rl5kvurQl6tV2cC81UuxR7zEvsNaFCvBK93ecA==", "comment"=>{"author_name"=>"Hey wazp", "body"=>"Lets go"}, "commit"=>"Submit", "article_id"=>"14"}
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.0ms)
+
+
+  
+NoMethodError (undefined method `article_id=' for nil:NilClass):
+  
+app/controllers/comments_controller.rb:5:in `create'
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (2.6ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.5ms)
+  Rendering /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered /home/daniel/.rvm/gems/ruby-2.3.3/gems/actionpack-5.0.3/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (22.4ms)
+Started POST "/articles/14/comments" for 127.0.0.1 at 2017-05-20 11:40:54 +0200
+Processing by CommentsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"lrnXW9wlaojSfIk0Bk86nn3R+hnXmcAjMaHnQEx0GlheENLkCzyGDbi9iu5N1WC9ZmHq8N7qgN+GEHWzaleosA==", "comment"=>{"author_name"=>"Hey wazp", "body"=>"Lets go"}, "commit"=>"Submit", "article_id"=>"14"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mArticle Load (0.1ms)[0m  [1m[34mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "comments" ("author_name", "body", "article_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["author_name", "Hey wazp"], ["body", "Lets go"], ["article_id", 14], ["created_at", "2017-05-20 09:40:54.564091"], ["updated_at", "2017-05-20 09:40:54.564091"]]
+  [1m[35m (7.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/articles/14
+Completed 302 Found in 28ms (ActiveRecord: 9.8ms)
+
+
+Started GET "/articles/14" for 127.0.0.1 at 2017-05-20 11:40:54 +0200
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mArticle Load (0.1ms)[0m  [1m[34mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  Rendering articles/show.html.erb within layouts/application
+  Rendered comments/_form.html.erb (1.8ms)
+  [1m[36mComment Load (0.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  Rendered collection of articles/_comment.html.erb [3 times] (0.4ms)
+  Rendered articles/show.html.erb within layouts/application (6.6ms)
+Completed 200 OK in 28ms (Views: 25.9ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/articles/14" for 127.0.0.1 at 2017-05-20 11:41:56 +0200
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mArticle Load (0.1ms)[0m  [1m[34mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  Rendering articles/show.html.erb within layouts/application
+  Rendered comments/_form.html.erb (1.5ms)
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  [1m[36mComment Load (0.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  Rendered collection of articles/_comment.html.erb [3 times] (0.3ms)
+  Rendered articles/show.html.erb within layouts/application (7.5ms)
+Completed 200 OK in 50ms (Views: 34.1ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/articles/14" for 127.0.0.1 at 2017-05-20 11:42:30 +0200
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mArticle Load (0.1ms)[0m  [1m[34mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  Rendering articles/show.html.erb within layouts/application
+  Rendered comments/_form.html.erb (1.0ms)
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  [1m[36mComment Load (0.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  Rendered collection of articles/_comment.html.erb [3 times] (0.7ms)
+  Rendered articles/show.html.erb within layouts/application (12.9ms)
+Completed 200 OK in 43ms (Views: 41.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles/14" for 127.0.0.1 at 2017-05-20 11:42:46 +0200
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mArticle Load (0.1ms)[0m  [1m[34mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  Rendering articles/show.html.erb within layouts/application
+  Rendered comments/_form.html.erb (2.0ms)
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  [1m[36mComment Load (0.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  Rendered collection of articles/_comment.html.erb [3 times] (0.4ms)
+  Rendered articles/show.html.erb within layouts/application (9.7ms)
+Completed 200 OK in 38ms (Views: 36.1ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/articles/14" for 127.0.0.1 at 2017-05-20 11:44:00 +0200
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mArticle Load (0.1ms)[0m  [1m[34mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  Rendering articles/show.html.erb within layouts/application
+  Rendered comments/_form.html.erb (6.7ms)
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  [1m[36mComment Load (0.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  Rendered collection of articles/_comment.html.erb [3 times] (1.1ms)
+  Rendered articles/show.html.erb within layouts/application (11.4ms)
+Completed 200 OK in 36ms (Views: 34.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/articles/14" for 127.0.0.1 at 2017-05-20 11:44:01 +0200
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"14"}
+  [1m[36mArticle Load (0.1ms)[0m  [1m[34mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  Rendering articles/show.html.erb within layouts/application
+  Rendered comments/_form.html.erb (0.9ms)
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  [1m[36mComment Load (0.3ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 14]]
+  Rendered collection of articles/_comment.html.erb [3 times] (0.9ms)
+  Rendered articles/show.html.erb within layouts/application (5.4ms)
+Completed 200 OK in 30ms (Views: 28.3ms | ActiveRecord: 0.5ms)
+
+
